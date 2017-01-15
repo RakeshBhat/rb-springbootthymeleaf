@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Spring Boot and Thymeleaf example</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div class="container">
+		<table class="table table-striped">
+			<tr>
+				<th>RoleId</th>
+				<th>Message</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Date of Birth</th>
+				<th>Mobile</th>
+				<th>E-mail</th>
+				<th>Address</th>
+				<th>Feedback</th>
+			</tr>
+			<tr th:each="user : ${users}">
+				<td th:text="${user.roleId}"></td>
+				<td th:text="${user.message}"></td>
+				<td th:text="${user.fname}"></td>
+				<td th:text="${user.lname}"></td>
+				<td th:text="${user.dateOfBirth}"></td>
+				<td th:text="${user.mphone}"></td>
+				<td th:text="${user.email}"></td>
+				<td th:text="${user.address}"></td>
+				<td th:text="${user.feedback}"></td>
+			</tr>
+		</table>
+</div>
+</body>
+</html>

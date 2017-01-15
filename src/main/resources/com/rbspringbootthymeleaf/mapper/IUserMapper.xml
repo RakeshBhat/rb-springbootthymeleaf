@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rb.springbootthymeleaf.mapper.IUserMapper">
+<resultMap type="com.rb.springbootthymeleaf.entity.User" id="userResult">
+ <id column="ROLE_ID" property="roleId"/>
+ <result column="MESSAGE" property="message"/>
+ <result column="FIRST_NAME" property="fname"/>
+ <result column="LAST_NAME" property="lname"/>
+ <result column="DOB" property="dateOfBirth"/>
+ <result column="MOBILE" property="mphone"/>
+ <result column="EMAIL" property="email"/>
+ <result column="ADDRESS" property="address"/>
+ <result column="FEEDBACK" property="feedback"/>
+</resultMap>
+
+<select id="getUserByRoleId" parameterType="Integer" resultMap="userResult">
+SELECT * FROM USER WHERE ROLE_ID = #{roleId}
+</select>
+
+<select id="getUserByName" parameterType="String">
+SELECT * FROM USER WHERE FIRST_NAME=#{name} OR LAST_NAME=#{name}
+</select>
+
+<update id="saveOrUpdateUser" parameterType="user">
+MERGE INTO JGD.USER u USING (SELECT 'ROLE_ID' ROLE_ID FROM DUAL) ON ( u.ROLE_ID=#{roleId})
+WHEN MATCHED THEN
+UPDATE 
+SET u.ROLE_ID = #{roleId},
+ u.MESSAGE = #{message},
+ u.FIRST_NAME = #{fname},
+ u.LAST_NAME = #{lname},
+ u.DOB = #{dateOfBirth},
+ u.MOBILE = #{mphone},
+ u.EMAIL = #{email},
+ u.ADDRESS = #{address},
+ u.FEEDBACK = #{feedback}
+
+WHEN NOT MATCHED THEN
+INSERT (ROLE_ID, MESSAGE, FIRST_NAME, LAST_NAME, DOB, MOBILE, EMAIL, ADDRESS, FEEDBACK) VALUES (#{roleId}, #{message}, #{fname}, #{lname}, #{dateOfBirth}, #{mphone}, #{email}, #{address}, #{feedback})
+</update>
+
+</mapper>
